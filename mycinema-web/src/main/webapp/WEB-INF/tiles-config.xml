@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+    <definition name="baseLayout" template="/WEB-INF/templates/layout.jsp">    
+        <put-attribute name="title" value="" />
+        <put-attribute name="headerscript" value="/WEB-INF/templates/headerscript.jsp" />
+        <put-attribute name="header" value="/WEB-INF/templates/header.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/templates/footer.jsp" />
+    </definition>
+
+	<definition name="homePage" extends="baseLayout">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/homepage.jsp" />
+    </definition>
+
+	<definition name="registrationForm" extends="baseLayout">
+        <put-attribute name="title" value="Registration Form" />
+        <put-attribute name="body" value="/WEB-INF/views/register.jsp" />
+    </definition>
+
+	<definition name="confirmRegistration" extends="baseLayout">
+        <put-attribute name="title" value="Confirm Registration" />
+        <put-attribute name="body" value="/WEB-INF/views/confirmRegistration.jsp" />
+    </definition>
+	
+ 	<definition name="authLogin" extends="baseLayout">
+        <put-attribute name="title" value="Login Page" />
+        <put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+    </definition>
+    
+    <definition name="movie" extends="baseLayout">
+        <put-attribute name="title" value="Movie Details" />
+        <put-attribute name="body" value="/WEB-INF/views/movie.jsp" />
+    </definition>
+    
+    <definition name="bookingForm" extends="baseLayout">
+        <put-attribute name="title" value="Booking Form" />
+        <put-attribute name="body" value="/WEB-INF/views/booking.jsp" />
+    </definition>
+ 
+    <definition name="confirmBooking" extends="baseLayout">
+        <put-attribute name="title" value="Confirm Booking" />
+        <put-attribute name="body" value="/WEB-INF/views/confirmBooking.jsp" />
+    </definition>
+    
+    <definition name="myAccount" extends="baseLayout">
+        <put-attribute name="title" value="My Account" />
+        <put-attribute name="body" value="/WEB-INF/views/myaccount.jsp" />
+    </definition>
+    
+    <definition name="admin" extends="baseLayout">
+    	<put-attribute name="title" value="Admin Panel" />
+	    <put-attribute name="body" value="/WEB-INF/views/admin.jsp"/>
+	</definition>
+    
+    <definition name="error" extends="baseLayout">
+    	<put-attribute name="title" value="Error Page" />
+	    <put-attribute name="body" value="/WEB-INF/views/error.jsp"/>
+	</definition>
+     
+</tiles-definitions>

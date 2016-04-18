@@ -1,0 +1,1 @@
+<p>Copyright © 2016 MyCinema.com</p>

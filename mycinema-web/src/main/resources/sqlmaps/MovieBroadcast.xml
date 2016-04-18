@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="movieBroadcastMap">
+	
+	<resultMap id="movieBroadcastResultMap" type="com.mycinema.web.model.MovieBroadcast">
+		<result property="id" column="id" jdbcType="VARCHAR" />
+		<result property="movieId" column="movie_id" jdbcType="VARCHAR" />
+		<result property="movieTitle" column="movie_title" jdbcType="VARCHAR" />
+		<result property="movieDescription" column="movie_description" jdbcType="VARCHAR" />
+		<result property="theatreId" column="theatre_id" jdbcType="VARCHAR" />
+		<result property="theatreName" column="theatre_name" jdbcType="VARCHAR" />
+		<result property="broadcastDate" column="broadcast_date" jdbcType="TIMESTAMP" />
+	</resultMap>
+		
+	<select id="getMovieBroadcasts" resultMap="movieBroadcastResultMap" parameterType="java.util.Map">
+		SELECT mb.id, mb.movie_id, m.title AS movie_title, m.description AS movie_description, 
+			mb.theatre_id, t.name AS theatre_name, mb.broadcast_date
+		FROM movie_broadcast AS mb 
+			JOIN movie AS m ON mb.movie_id = m.id 
+			JOIN theatre AS t ON mb.theatre_id = t.id 
+		WHERE mb.movie_id = #{movieId} AND DATE(mb.broadcast_date) = #{broadcastDate}
+		ORDER BY mb.broadcast_date
+	</select>
+	
+	<select id="getMovieBroadcast" resultMap="movieBroadcastResultMap">
+		SELECT mb.id, mb.movie_id, m.title AS movie_title, m.description AS movie_description, 
+			mb.theatre_id, t.name AS theatre_name, mb.broadcast_date 
+		FROM movie_broadcast AS mb 
+			JOIN movie AS m ON mb.movie_id = m.id 
+			JOIN theatre AS t ON mb.theatre_id = t.id 
+		WHERE mb.id = #{id}
+	</select>
+	
+	<select id="getMovieBroadcastMultiParam" resultMap="movieBroadcastResultMap" parameterType="java.util.Map">
+		SELECT mb.id, mb.movie_id, m.title AS movie_title, m.description AS movie_description, 
+			mb.theatre_id, t.name AS theatre_name, mb.broadcast_date
+		FROM movie_broadcast AS mb 
+			JOIN movie AS m ON mb.movie_id = m.id 
+			JOIN theatre AS t ON mb.theatre_id = t.id 
+		WHERE mb.movie_id = #{movieId} AND mb.theatre_id = #{theatreId} AND 
+			mb.broadcast_date = #{broadcastDate}
+		ORDER BY mb.broadcast_date
+	</select>
+	
+	<select id="getMovieBroadcastsByDate" resultMap="movieBroadcastResultMap">
+		SELECT mb.id, mb.movie_id, m.title AS movie_title, m.description AS movie_description, 
+			mb.theatre_id, t.name AS theatre_name, mb.broadcast_date 
+		FROM movie_broadcast AS mb
+			JOIN movie AS m ON mb.movie_id = m.id 
+			JOIN theatre AS t ON mb.theatre_id = t.id 
+		WHERE DATE(mb.broadcast_date) = #{broadcastDate}
+	</select>
+	
+	<select id="getAvailableMovieBroadcasts" resultMap="movieBroadcastResultMap">
+		SELECT mb.id, mb.movie_id, m.title AS movie_title, m.description AS movie_description, 
+			mb.theatre_id, t.name AS theatre_name, mb.broadcast_date 
+		FROM movie_broadcast AS mb
+			JOIN movie AS m ON mb.movie_id = m.id 
+			JOIN theatre AS t ON mb.theatre_id = t.id 
+		WHERE mb.broadcast_date > CURDATE() 
+		ORDER BY mb.broadcast_date, mb.movie_id 
+	</select>
+	
+	<insert id="addMovieBroadcast">
+	    INSERT INTO movie_broadcast (id, movie_id, theatre_id, broadcast_date) 
+	    VALUES (#{id}, #{movieId}, #{theatreId}, #{broadcastDate})
+	</insert>
+
+</mapper>
