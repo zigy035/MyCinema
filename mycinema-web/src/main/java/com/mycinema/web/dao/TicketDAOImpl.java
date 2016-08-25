@@ -1,33 +1,48 @@
 package com.mycinema.web.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 import com.mycinema.web.model.Ticket;
 
 public class TicketDAOImpl extends SqlSessionDaoSupport implements TicketDAO {
-
+	
+	private EntityManager entityManager;
+	
+	@PersistenceContext(unitName = "cinemaPU")
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<Ticket> getTicketsByBroadcast(String broadcastId) {
-		return getSqlSession().selectList("getTicketsByBroadcast", broadcastId);
+		return (List<Ticket>) entityManager.createQuery("from Ticket t "
+				+ "WHERE t.movieBroadcast.id = :broadcastId")
+				.setParameter("broadcastId", broadcastId)
+				.getResultList();
 	}
 
 	public Ticket getAvailableTicket(String broadcastId, String seatRow, String seatColumn) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("broadcastId", broadcastId);
-		params.put("seatRow", seatRow);
-		params.put("seatColumn", seatColumn);
-		return getSqlSession().selectOne("getAvailableTicket", params);
+		return (Ticket) entityManager.createQuery("from Ticket t "
+				+ "WHERE t.movieBroadcast.id = :broadcastId "
+				+ "AND t.seatRow = :seatRow AND t.seatColumn = :seatColumn")
+				.setParameter("broadcastId", broadcastId)
+				.setParameter("seatRow", seatRow)
+				.setParameter("seatColumn", seatColumn)
+				.getSingleResult();
 	}
 	
 	public void addTicket(Ticket ticket) {
-		getSqlSession().insert("addTicket", ticket);
+		entityManager.persist(ticket);
 	}
 	
 	public void bookTicket(Ticket ticket) {
-		getSqlSession().update("bookTicket", ticket);
+		entityManager.merge(ticket);
+		entityManager.flush();
 	}
 
 }

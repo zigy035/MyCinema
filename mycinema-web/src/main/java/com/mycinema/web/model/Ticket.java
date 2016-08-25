@@ -1,55 +1,67 @@
 package com.mycinema.web.model;
 
-import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
+@Table(name = "ticket", uniqueConstraints={@UniqueConstraint(columnNames = {"movie_broadcast_id", "seat_row", "seat_column"})})
 public class Ticket {
 	
 	private String id;
-	private String movieBroadcastId;
-	private String authUserId;
+	private MovieBroadcast movieBroadcast;
+	private AuthUser authUser;
 	private String seatRow;
 	private String seatColumn;
-	
-	public Ticket() {
-		this.id = UUID.randomUUID().toString();
-	}
 
+	@Id
+    @GenericGenerator(name = "cinema_keygen", strategy = "com.mycinema.web.util.CinemaKeyGenerator")
+    @GeneratedValue(generator = "cinema_keygen")
+	@Column(name = "id", length = 36)
 	public String getId() {
 		return id;
 	}
-
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	public String getMovieBroadcastId() {
-		return movieBroadcastId;
+	@ManyToOne(targetEntity = MovieBroadcast.class)
+	@JoinColumn(name = "movie_broadcast_id", nullable = false)
+	public MovieBroadcast getMovieBroadcast() {
+		return movieBroadcast;
+	}
+	public void setMovieBroadcast(MovieBroadcast movieBroadcast) {
+		this.movieBroadcast = movieBroadcast;
 	}
 
-	public void setMovieBroadcastId(String movieBroadcastId) {
-		this.movieBroadcastId = movieBroadcastId;
+	@ManyToOne(targetEntity = AuthUser.class)
+	@JoinColumn(name = "auth_user_id")
+	public AuthUser getAuthUser() {
+		return authUser;
+	}
+	public void setAuthUser(AuthUser authUser) {
+		this.authUser = authUser;
 	}
 
-	public String getAuthUserId() {
-		return authUserId;
-	}
-
-	public void setAuthUserId(String authUserId) {
-		this.authUserId = authUserId;
-	}
-
+	@Column(name = "seat_row", nullable = false)
 	public String getSeatRow() {
 		return seatRow;
 	}
-
 	public void setSeatRow(String seatRow) {
 		this.seatRow = seatRow;
 	}
 
+	@Column(name = "seat_column", nullable = false)
 	public String getSeatColumn() {
 		return seatColumn;
 	}
-
 	public void setSeatColumn(String seatColumn) {
 		this.seatColumn = seatColumn;
 	}

@@ -63,7 +63,7 @@
 							<c:param name="mbid" value="${broadcast.id}"/>
 						</c:url>
 						<a href="${bookURL}" class="broadcast">
-							${broadcast.theatreName} - 
+							${broadcast.theatre.name} - 
 							<fmt:formatDate pattern="HH:mm" value="${broadcast.broadcastDate}" />
 						</a>
 					</c:forEach>

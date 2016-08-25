@@ -31,6 +31,51 @@
 		<property name="password" value="${jdbc.password}" />
 	</bean>
 	
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceUnitName" value="cinemaPU"/>
+		<property name="packagesToScan"> 
+			<list>
+                <value>com.mycinema.web.model</value>
+            </list>
+		</property>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaProperties">
+			<props>
+<!-- 				<prop key="hibernate.hbm2ddl.auto">create-drop</prop> -->
+				<prop key="hibernate.hbm2ddl.auto">validate</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<bean id="movieDAO" class="com.mycinema.web.dao.MovieDAOImpl">
+		<property name="entityManager" ref="entityManager" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="movieService" class="com.mycinema.web.service.MovieServiceImpl">
+		<property name="movieDAO" ref="movieDAO" />
+		<property name="ticketDAO" ref="ticketDAO" />
+	</bean>
+	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="mapperLocations">
@@ -45,11 +90,12 @@
         </property>
     </bean>
 	
-	<bean id="movieDAO" class="com.mycinema.web.dao.MovieDAOImpl">
+	<!-- <bean id="movieDAO" class="com.mycinema.web.dao.MovieDAOImpl">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-	</bean>
+	</bean> -->
 	
 	<bean id="theatreDAO" class="com.mycinema.web.dao.TheatreDAOImpl">
+		<property name="entityManager" ref="entityManager" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 
@@ -58,12 +104,13 @@
 	</bean>
 	
 	<bean id="ticketDAO" class="com.mycinema.web.dao.TicketDAOImpl">
+		<property name="entityManager" ref="entityManager" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	
-	<bean id="movieService" class="com.mycinema.web.service.MovieServiceImpl">
+	<!-- <bean id="movieService" class="com.mycinema.web.service.MovieServiceImpl">
 		<property name="movieDAO" ref="movieDAO"/>
-	</bean>
+	</bean> -->
 	
 	<bean id="theatreService" class="com.mycinema.web.service.TheatreServiceImpl">
 		<property name="theatreDAO" ref="theatreDAO"/>
@@ -96,6 +143,7 @@
 		<constructor-arg value="1" />
 	</bean>
 
+	<!-- 
 	<aop:config>
 		<aop:pointcut id="txMovieService" expression="execution(* com.mycinema.web.service.MovieServiceImpl.*(..))"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txMovieService"/>
@@ -121,5 +169,6 @@
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />    
 	</bean>
+	 -->
 
 </beans>

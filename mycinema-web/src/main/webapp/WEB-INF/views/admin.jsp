@@ -139,8 +139,8 @@
 			<c:forEach items="${broadcasts}" var="broadcast">
 				<tr>
 					<td><fmt:formatDate value="${broadcast.broadcastDate}" pattern="dd.MM.yyyy"/></td>
-					<td>${broadcast.movieTitle}</td>
-					<td>${broadcast.theatreName}</td>
+					<td>${broadcast.movie.title}</td>
+					<td>${broadcast.theatre.name}</td>
 					<td><fmt:formatDate value="${broadcast.broadcastDate}" pattern="HH:mm"/></td>
 				</tr>
 			</c:forEach>

@@ -86,10 +86,10 @@ public class AdminController extends AbstractController {
 		}
 		
 		MovieBroadcast broadcast = new MovieBroadcast();
-		broadcast.setMovieId(movieBroadcastForm.getMovieId());
-		broadcast.setTheatreId(movieBroadcastForm.getTheatreId());
+		broadcast.setMovie(movieService.getMovie(movieBroadcastForm.getMovieId()));
+		broadcast.setTheatre(theatreService.getTheatre(movieBroadcastForm.getTheatreId()));
 		broadcast.setBroadcastDate(createDateTimeObject(movieBroadcastForm));
-		ticketService.addBroadcastTickets(broadcast);
+		movieService.addMovieBroadcast(broadcast);
 		
 		return "redirect:/admin";
 	}

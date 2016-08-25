@@ -69,8 +69,8 @@ public class TicketGenerator {
 				calendar.add(Calendar.HOUR, hourArray[hourIndex]);
 				calendar.add(Calendar.MINUTE, minuteArray[minuteIndex]);
 				MovieBroadcast broadcast = new MovieBroadcast();
-				broadcast.setTheatreId(theatre.getId());
-				broadcast.setMovieId(movie.getId());
+				broadcast.setTheatre(theatre);
+				broadcast.setMovie(movie);
 				broadcast.setBroadcastDate(calendar.getTime());
 				movieService.addMovieBroadcast(broadcast);
 			}

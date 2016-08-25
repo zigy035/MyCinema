@@ -11,6 +11,7 @@
 	<properties>
 		<spring.version>4.1.2.RELEASE</spring.version>
 		<springsec.version>4.0.2.RELEASE</springsec.version>
+		<hibernate.version>4.3.5.Final</hibernate.version>
 		<mybatis.version>3.2.2</mybatis.version>
 		<tiles.version>3.0.5</tiles.version>
 	</properties>
@@ -50,6 +51,18 @@
 	        <artifactId>spring-security-web</artifactId>
 	        <version>${springsec.version}</version>
 	    </dependency>
+	    
+	    <!-- Hibernate/JPA -->
+	    <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.hibernate.javax.persistence</groupId>
+		    <artifactId>hibernate-jpa-2.0-api</artifactId>
+		    <version>1.0.1.Final</version>
+		</dependency>
 	    
 	    <!-- MyBatis -->
 	    <dependency>

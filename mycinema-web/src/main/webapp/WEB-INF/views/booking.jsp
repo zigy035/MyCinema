@@ -39,7 +39,7 @@
 				<td>${entry.key}</td>
 				<c:forEach items="${entry.value}" var="ticket">
 					<td>
-						<form:checkbox path="seats" disabled="${not empty ticket.authUserId}" 
+						<form:checkbox path="seats" disabled="${not empty ticket.authUser}" 
 							value="${ticket.seatRow}-${ticket.seatColumn}"/>
 						<form:errors path="seats" />
 					</td>

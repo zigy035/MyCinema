@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -139,12 +138,12 @@ public class BookingController extends AbstractController {
 				if (ticket == null) {
 					// UI hack on seats
 					return BookingStatus.ERROR;
-				} else if (StringUtils.isNotEmpty(ticket.getAuthUserId())) {
+				} else if (ticket.getAuthUser() != null) {
 					// Already booked
 					return BookingStatus.NOT_AVAILABLE;
 				}
 			}
-			ticket.setAuthUserId(getAuthUser().getId());
+			ticket.setAuthUser(getAuthUser());
 			tickets.add(ticket);
 		}
 		
