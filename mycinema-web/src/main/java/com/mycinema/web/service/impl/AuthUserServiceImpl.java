@@ -1,8 +1,10 @@
-package com.mycinema.web.service;
+package com.mycinema.web.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.mycinema.web.dao.AuthUserDAO;
 import com.mycinema.web.model.AuthUser;
+import com.mycinema.web.service.AuthUserService;
 
 
 public class AuthUserServiceImpl implements AuthUserService
@@ -59,6 +62,7 @@ public class AuthUserServiceImpl implements AuthUserService
 		return authUserDAO.getAuthUserByUsername(username);
 	}
 
+	@Transactional
 	public void addAuthUser(AuthUser authUser) {
 		authUserDAO.addAuthUser(authUser);
 	}

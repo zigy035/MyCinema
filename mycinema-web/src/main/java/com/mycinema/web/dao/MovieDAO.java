@@ -2,7 +2,6 @@ package com.mycinema.web.dao;
 
 import java.util.List;
 
-import com.mycinema.web.model.Booking;
 import com.mycinema.web.model.Movie;
 import com.mycinema.web.model.MovieBroadcast;
 
@@ -19,8 +18,6 @@ public interface MovieDAO {
 	MovieBroadcast getMovieBroadcast(String broadcastId);
 
 	void addMovieBroadcast(MovieBroadcast broadcast);
-
-	List<Booking> getBookingsByAuthUser(String authUserId);
 
 	List<MovieBroadcast> getAvailableMovieBroadcasts();
 

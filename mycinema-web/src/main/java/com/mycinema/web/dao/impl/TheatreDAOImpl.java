@@ -1,15 +1,14 @@
-package com.mycinema.web.dao;
+package com.mycinema.web.dao.impl;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.mybatis.spring.support.SqlSessionDaoSupport;
-
+import com.mycinema.web.dao.TheatreDAO;
 import com.mycinema.web.model.Theatre;
 
-public class TheatreDAOImpl extends SqlSessionDaoSupport implements TheatreDAO {
+public class TheatreDAOImpl implements TheatreDAO {
 	
 	private EntityManager entityManager;
 	

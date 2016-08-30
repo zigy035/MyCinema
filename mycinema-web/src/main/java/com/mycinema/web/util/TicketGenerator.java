@@ -27,9 +27,6 @@ public class TicketGenerator {
 		TicketGenerator p = ctx.getBean(TicketGenerator.class);
         p.start(args);
 	}
-
-	@Autowired
-    private TicketService ticketService;
 	
 	@Autowired
 	private MovieService movieService;
@@ -75,8 +72,8 @@ public class TicketGenerator {
 				movieService.addMovieBroadcast(broadcast);
 			}
 			
-			List<MovieBroadcast> broadcasts = movieService.getBroadcastsByDate(strDate);
-			ticketService.addTicketsForBroadcasts(broadcasts);
+			/*List<MovieBroadcast> broadcasts = movieService.getBroadcastsByDate(strDate);
+			ticketService.addTicketsForBroadcasts(broadcasts);*/
 			
 			System.out.println("Movies, Broadcasts and Tickets added for date: " + strDate);
 		}

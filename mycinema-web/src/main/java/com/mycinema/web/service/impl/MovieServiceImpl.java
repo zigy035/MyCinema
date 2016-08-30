@@ -1,4 +1,4 @@
-package com.mycinema.web.service;
+package com.mycinema.web.service.impl;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import javax.transaction.Transactional;
 
 import com.mycinema.web.dao.MovieDAO;
 import com.mycinema.web.dao.TicketDAO;
-import com.mycinema.web.model.Booking;
 import com.mycinema.web.model.Movie;
 import com.mycinema.web.model.MovieBroadcast;
 import com.mycinema.web.model.Theatre;
 import com.mycinema.web.model.Ticket;
+import com.mycinema.web.service.MovieService;
 
 public class MovieServiceImpl implements MovieService {
 	
@@ -53,10 +53,6 @@ public class MovieServiceImpl implements MovieService {
 				ticketDAO.addTicket(ticket);
 			}
 		}
-	}
-	
-	public List<Booking> getBookingsByAuthUser(String authUserId) {
-		return movieDAO.getBookingsByAuthUser(authUserId);
 	}
 
 	public List<MovieBroadcast> getAvailableMovieBroadcasts() {

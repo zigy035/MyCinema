@@ -6,7 +6,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:choose>
-	<c:when test="${not empty bookings}">
+	<c:when test="${not empty broadcastTicketMap}">
 		<h3>My Bookings</h3>
 		<table class="stripeMe sample">
 			<tr>
@@ -16,15 +16,19 @@
 				<th><spring:message code="theatre"/></th>
 				<th><spring:message code="seats"/></th>
 			</tr>
-			<c:forEach items="${bookings}" var="booking">
+			<c:forEach var="entry" items="${broadcastTicketMap}">
 				<tr>
-					<td><fmt:formatDate value="${booking.broadcastDate}" pattern="dd.MM.yyyy"/></td>
-					<td><fmt:formatDate value="${booking.broadcastDate}" pattern="HH:mm"/></td>
-					<td>${booking.movieTitle}</td>
-					<td>${booking.theatreName}</td>
-					<td>${booking.tickets}</td>
+					<td><fmt:formatDate value="${entry.key.broadcastDate}" pattern="dd.MM.yyyy"/></td>
+					<td><fmt:formatDate value="${entry.key.broadcastDate}" pattern="HH:mm"/></td>
+					<td>${entry.key.movie.title}</td>
+					<td>${entry.key.theatre.name}</td>
+					<td>
+						<c:forEach items="${entry.value}" var="ticket">
+							${ticket.seatRow}${ticket.seatColumn}
+						</c:forEach>
+					</td>
 				</tr>
-			</c:forEach>
+			</c:forEach>		
 		</table>
 	</c:when>
 	<c:otherwise>
